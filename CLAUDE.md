@@ -16,8 +16,8 @@ A real-time call assistant that:
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS + Shadcn UI
-- **Speech Recognition**: LiveKit (Deepgram under the hood) refer to this guide: https://docs.livekit.io/home/quickstarts/nextjs/
-- **AI**: OpenAI API (GPT-4)
+- **Speech Recognition**: Whisper
+- **AI**: OpenAI API
 
 ## User Flow
 
@@ -90,7 +90,7 @@ Collect user context to personalize responses:
 ## Core Functionality
 
 ### Speech Recognition
-- Use LiveKit SDK
+- Use Whisper
 - Continuous listening mode
 - Display interim results (real-time transcription)
 - Final results trigger AI response generation
