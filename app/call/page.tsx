@@ -150,72 +150,65 @@ export default function Page() {
   return (
     <div className="p-4 md:p-8">
       <div className="flex flex-col gap-6">
-        {/* Header with Status and Controls */}
-        <Card>
-          <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Phone className="size-6" />
-                <div>
-                  <CardTitle className="text-xl">Call Assistant</CardTitle>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge
-                      variant={
-                        recordingState === "recording" ? "default" : "outline"
-                      }
-                      className={cn(
-                        recordingState === "recording" &&
-                          "bg-red-500 hover:bg-red-600 animate-pulse"
-                      )}
-                    >
-                      {recordingState === "recording" ? (
-                        <>
-                          <Mic className="size-3 mr-1" />
-                          RECORDING
-                        </>
-                      ) : (
-                        <>
-                          <MicOff className="size-3 mr-1" />
-                          READY
-                        </>
-                      )}
-                    </Badge>
-                    {(isTranscribing || isGeneratingResponse) && (
-                      <Badge variant="outline">
-                        <Loader2 className="size-3 mr-1 animate-spin" />
-                        {isTranscribing
-                          ? "Transcribing..."
-                          : "Generating response..."}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Phone className="size-6" />
+            <div>
+              <CardTitle className="text-xl">Call Assistant</CardTitle>
+              <div className="flex items-center gap-2 mt-1">
+                <Badge
+                  variant={
+                    recordingState === "recording" ? "default" : "outline"
+                  }
+                  className={cn(
+                    recordingState === "recording" &&
+                      "bg-red-500 hover:bg-red-600 animate-pulse"
+                  )}
+                >
+                  {recordingState === "recording" ? (
+                    <>
+                      <Mic className="size-3 mr-1" />
+                      RECORDING
+                    </>
+                  ) : (
+                    <>
+                      <MicOff className="size-3 mr-1" />
+                      READY
+                    </>
+                  )}
+                </Badge>
+                {(isTranscribing || isGeneratingResponse) && (
+                  <Badge variant="outline">
+                    <Loader2 className="size-3 mr-1 animate-spin" />
+                    {isTranscribing
+                      ? "Transcribing..."
+                      : "Generating response..."}
+                  </Badge>
+                )}
               </div>
-
-              <Button
-                onClick={handleRecordingToggle}
-                disabled={isTranscribing || isGeneratingResponse}
-                size="lg"
-                variant={recordingState === "recording" ? "destructive" : "default"}
-                className={cn(
-                  recordingState === "recording" && "animate-pulse"
-                )}
-              >
-                {recordingState === "recording" ? (
-                  <>
-                    <MicOff className="size-4" />
-                    Stop Recording
-                  </>
-                ) : (
-                  <>
-                    <Mic className="size-4" />
-                    Start Recording
-                  </>
-                )}
-              </Button>
             </div>
-          </CardHeader>
-        </Card>
+          </div>
+
+          <Button
+            onClick={handleRecordingToggle}
+            disabled={isTranscribing || isGeneratingResponse}
+            size="lg"
+            variant={recordingState === "recording" ? "destructive" : "default"}
+            className={cn(recordingState === "recording" && "animate-pulse")}
+          >
+            {recordingState === "recording" ? (
+              <>
+                <MicOff className="size-4" />
+                Stop Recording
+              </>
+            ) : (
+              <>
+                <Mic className="size-4" />
+                Start Recording
+              </>
+            )}
+          </Button>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Conversation History */}
