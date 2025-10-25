@@ -43,9 +43,9 @@ export function AuthForm() {
           setSuccess('Successfully signed in!');
           setEmail('');
           setPassword('');
-          // Redirect to homepage after successful sign in
+          // Redirect to onboarding page (will auto-redirect to call if already onboarded)
           setTimeout(() => {
-            router.push('/');
+            router.push('/onboarding');
           }, 500);
         }
       } else {

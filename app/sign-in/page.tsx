@@ -11,7 +11,12 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (!isPending && session) {
-      router.push("/call");
+      // Redirect to onboarding if user hasn't completed it yet
+      if (!session.user.isOnboarded) {
+        router.push("/onboarding");
+      } else {
+        router.push("/call");
+      }
     }
   }, [session, isPending, router]);
 
