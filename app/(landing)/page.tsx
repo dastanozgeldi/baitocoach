@@ -51,9 +51,8 @@ export default function Page() {
           }}
           className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
         >
-          With AI, you can launch your website in hours, not days. Try our best
-          in class, state of the art, cutting edge AI tools to get your website
-          up.
+          Real-time Japanese translation and coaching for international students
+          during part-time job inquiry calls.
         </motion.p>
         <motion.div
           initial={{
@@ -66,7 +65,7 @@ export default function Page() {
             duration: 0.3,
             delay: 1,
           }}
-          className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
+          className="relative z-10 mt-4 flex flex-wrap items-center justify-center gap-4"
         >
           <Button asChild size="lg" className="text-lg px-12 h-12">
             <Link href="/onboarding">Start Preparing Your Call</Link>

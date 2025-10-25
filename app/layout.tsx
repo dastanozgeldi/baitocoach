@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Baito Coach",
   description:
-    "Baito Coach is a platform for assisting international students land their first arubaito.",
+    "Real-time Japanese translation and coaching for international students during part-time job inquiry calls",
 };
 
 export default function RootLayout({
