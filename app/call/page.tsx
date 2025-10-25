@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -317,6 +317,8 @@ export default function Page() {
             </CardContent>
           </Card>
         </div>
+
+        <Button className="self-end" onClick={() => signOut()}>Sign Out</Button>
       </div>
     </div>
   );

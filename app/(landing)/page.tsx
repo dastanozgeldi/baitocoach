@@ -89,7 +89,7 @@ export default function Page() {
           <div className="w-full overflow-hidden rounded-xl border border-gray-300 dark:border-gray-700">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://assets.aceternity.com/pro/aceternity-landing.webp"
+              src="/hero.webp"
               alt="Landing page preview"
               className="aspect-video h-auto w-full object-cover"
               height={1000}
