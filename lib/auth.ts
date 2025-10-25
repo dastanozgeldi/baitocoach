@@ -16,4 +16,13 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  user: {
+    additionalFields: {
+      isOnboarded: {
+        type: "boolean",
+        defaultValue: false,
+        required: false,
+      },
+    },
+  },
 });
