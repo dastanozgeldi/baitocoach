@@ -63,7 +63,6 @@ export async function POST(request: NextRequest) {
     const userInfoId = `${session.user.id}_info_${Date.now()}`;
 
     // Insert user info
-    // @ts-expect-error - Type mismatch due to duplicate drizzle-orm versions in node_modules
     await db.insert(userInfo).values({
       id: userInfoId,
       userId: session.user.id,
@@ -83,7 +82,6 @@ export async function POST(request: NextRequest) {
     });
 
     // Update user's onboarding status
-    // @ts-expect-error - Type mismatch due to duplicate drizzle-orm versions in node_modules
     await db.update(user).set({ isOnboarded: true }).where(eq(user.id, session.user.id));
 
     return NextResponse.json(
@@ -114,7 +112,6 @@ export async function GET() {
     }
 
     // Get user info using select
-    // @ts-expect-error - Type mismatch due to duplicate drizzle-orm versions in node_modules
     const results = await db.select().from(userInfo).where(eq(userInfo.userId, session.user.id)).limit(1);
 
     if (!results || results.length === 0) {
