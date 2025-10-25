@@ -11,6 +11,7 @@ import { Mic, MicOff, Phone, Copy, Loader2, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { generateResponse } from "@/app/actions/generate-response";
+import { transcribeAudio } from "@/app/actions/transcribe";
 
 interface ConversationEntry {
   id: string;
@@ -63,19 +64,7 @@ export default function Page() {
     setIsTranscribing(true);
     try {
       // Step 1: Transcribe the audio
-      const formData = new FormData();
-      formData.append("audio", blob, "audio.webm");
-
-      const transcribeResponse = await fetch("/api/transcribe", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!transcribeResponse.ok) {
-        throw new Error("Transcription failed");
-      }
-
-      const transcriptionData = await transcribeResponse.json();
+      const transcriptionData = await transcribeAudio(blob);
 
       if (!transcriptionData.text || !transcriptionData.text.trim()) {
         toast.error("No speech detected. Please try again.");

@@ -40,6 +40,7 @@ Generate a natural, polite Japanese response that:
 3. Is culturally appropriate for a job inquiry call (use polite form)
 4. Keeps the conversation moving toward scheduling an interview
 5. Is honest about limitations but emphasizes willingness to learn
+6. Is short and to the point. 2 sentences max.
 
 If the business owner asks about Japanese ability, be honest but positive (e.g., "まだ勉強中ですが、頑張ります" - I'm still studying but I'll do my best).`;
 
