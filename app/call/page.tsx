@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mic, MicOff, Phone, Copy, Loader2, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { generateResponse } from "@/app/actions/generate-response";
 
 interface ConversationEntry {
   id: string;
@@ -96,22 +97,10 @@ export default function Page() {
 
       // Step 3: Generate response suggestion
       setIsGeneratingResponse(true);
-      const responseData = await fetch("/api/generate-response", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          transcription: transcriptionData.text,
-          userId: session?.user?.id,
-        }),
-      });
-
-      if (!responseData.ok) {
-        throw new Error("Failed to generate response");
-      }
-
-      const suggestion = await responseData.json();
+      const suggestion = await generateResponse(
+        transcriptionData.text,
+        session?.user?.id || ""
+      );
       setCurrentSuggestion(suggestion);
 
       // Update conversation entry with English translation

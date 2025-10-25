@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/drizzle";
 import { userInfo } from "@/drizzle/schema";
 import { openai } from "@ai-sdk/openai";
@@ -5,25 +7,17 @@ import { generateObject } from "ai";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-export const maxDuration = 30;
+export async function generateResponse(transcription: string, userId: string) {
+  if (!transcription) {
+    throw new Error("No transcription provided");
+  }
 
-export async function POST(req: Request) {
-  try {
-    const { transcription, userId } = await req.json();
+  // Get user info from database
+  const info = await db.query.userInfo.findFirst({
+    where: eq(userInfo.userId, userId || "fY7s72X4iKNAgpt3UKvjQKUex5vyRKCB"),
+  });
 
-    if (!transcription) {
-      return Response.json(
-        { error: "No transcription provided" },
-        { status: 400 }
-      );
-    }
-
-    // Get user info from database
-    const info = await db.query.userInfo.findFirst({
-      where: eq(userInfo.userId, userId || "fY7s72X4iKNAgpt3UKvjQKUex5vyRKCB"),
-    });
-
-    const systemPrompt = `You are assisting an international student in Japan who is on a phone call 
+  const systemPrompt = `You are assisting an international student in Japan who is on a phone call 
 inquiring about part-time work. The student has limited Japanese ability.
 
 Student Profile:
@@ -32,7 +26,9 @@ Student Profile:
 - Available days: ${info?.daysAvailable || "Flexible"}
 - Hours per week: ${info?.hoursPerWeek || "Flexible"} hours
 - Time preference: ${info?.timePreference || "Flexible"}
-- Experience: ${info?.hasExperience ? info.experienceDescription : "No prior experience"}
+- Experience: ${
+    info?.hasExperience ? info.experienceDescription : "No prior experience"
+  }
 - Japanese level: ${info?.japaneseLevel || "Beginner"}
 - Contact: ${info?.preferredContactMethod || "phone"}
 
@@ -47,23 +43,15 @@ Generate a natural, polite Japanese response that:
 
 If the business owner asks about Japanese ability, be honest but positive (e.g., "まだ勉強中ですが、頑張ります" - I'm still studying but I'll do my best).`;
 
-    const result = await generateObject({
-      model: openai("gpt-4o"),
-      schema: z.object({
-        japanese: z.string().describe("Response in Japanese characters"),
-        romaji: z.string().describe("Response in romaji (romanized Japanese)"),
-        english: z.string().describe("English translation of the response"),
-      }),
-      prompt: systemPrompt,
-    });
+  const result = await generateObject({
+    model: openai("gpt-4o"),
+    schema: z.object({
+      japanese: z.string().describe("Response in Japanese characters"),
+      romaji: z.string().describe("Response in romaji (romanized Japanese)"),
+      english: z.string().describe("English translation of the response"),
+    }),
+    prompt: systemPrompt,
+  });
 
-    return Response.json(result.object);
-  } catch (error) {
-    console.error("Response generation error:", error);
-    return Response.json(
-      { error: "Failed to generate response" },
-      { status: 500 }
-    );
-  }
+  return result.object;
 }
-
